@@ -354,6 +354,26 @@ class SafetyEvaluator:
         gray = cv2.cvtColor(patch, cv2.COLOR_BGR2GRAY)
         return float(np.std(gray))
 
+    # --------------------------------------------------
+    # INTERNAL ABORT HANDLER
+    # --------------------------------------------------
+
+    def _abort_result(self, reason: str, code: str):
+        """
+        Return standardized abort dictionary when landing is unsafe.
+        """
+
+        return {
+            "safety_score": 0.0,
+            "decision": "ABORT",
+            "reason": reason,
+            "risk_factors": [code],
+            "pad_detection": None,
+            "uncertainty": None,
+            "consensus": None,
+        }
+
+
 
 # ============================================================
 # END OF FILE

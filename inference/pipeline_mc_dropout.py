@@ -27,9 +27,12 @@ from inference.calibration.temperature_scaling import TemperatureScaling
 from inference.risk_assessment.safety_evaluator import SafetyEvaluator
 
 
+# ---------------------------------------------------------
+# JSON UTILITY
+# ---------------------------------------------------------
+
 def make_json_safe(obj):
     """Recursively convert numpy types to Python native types."""
-    import numpy as np
 
     if isinstance(obj, np.ndarray):
         return obj.tolist()
@@ -84,11 +87,6 @@ class MCDropoutPipeline:
     # -----------------------------------------------------
 
     def process(self, image_path: str) -> dict:
-        """
-        Run full pipeline on ONE image.
-
-        Returns final decision + diagnostics.
-        """
 
         print("\n" + "=" * 70)
         print(f"🛰️  Processing image: {image_path}")
@@ -126,23 +124,35 @@ class MCDropoutPipeline:
             )
 
         # -------------------------------------------------
-        # 3. SAFETY ASSESSMENT
+        # 3. SAFETY ASSESSMENT  (SAFE WRAPPER)
         # -------------------------------------------------
 
         print("\n[3/3] Running safety evaluator...")
 
-        safety = self.safety_evaluator.assess_landing_safety(
-            image_path=image_path,
-            detections=detections,
-            uncertainty=bbox_uncertainty,
-            consensus=consensus,
-        )
+        try:
+            safety = self.safety_evaluator.assess_landing_safety(
+                image_path=image_path,
+                detections=detections,
+                uncertainty=bbox_uncertainty,
+                consensus=consensus,
+            )
+
+        except Exception as e:
+            print("⚠️ Safety evaluator failed → forcing ABORT")
+            print("   Error:", e)
+
+            safety = {
+                "safety_score": 0.0,
+                "decision": "ABORT",
+                "reason": "safety_module_error",
+                "risk_factors": ["safety_module_error"],
+            }
 
         print("\n🛑 FINAL DECISION")
         print("-" * 40)
         print(f"Decision:     {safety['decision']}")
         print(f"Safety Score: {safety['safety_score']:.3f}")
-        print(f"Risk Factors: {len(safety['risk_factors'])}")
+        print(f"Risk Factors: {len(safety.get('risk_factors', []))}")
 
         return {
             "image_path": image_path,
@@ -161,9 +171,6 @@ class MCDropoutPipeline:
     # -----------------------------------------------------
 
     def process_batch(self, image_folder: str, max_images=10):
-        """
-        Run pipeline on folder of images.
-        """
 
         images = list(Path(image_folder).glob("*.jpg")) + \
                  list(Path(image_folder).glob("*.png"))
@@ -180,12 +187,10 @@ class MCDropoutPipeline:
                 print(f"❌ Failed on {img}: {e}")
 
         return results
+
     # -----------------------------------------------------
 
     def save_visualization(self, result: dict):
-        """
-        Draw detections + decision banner and save image.
-        """
 
         image_path = result["image_path"]
         image = cv2.imread(image_path)
@@ -196,15 +201,11 @@ class MCDropoutPipeline:
 
         h, w = image.shape[:2]
 
-        # ------------------------------
-        # Draw detections
-        # ------------------------------
-
         colors = {
-            0: (0, 0, 255),     # Vehicle
-            1: (0, 255, 255),   # UAP
-            2: (255, 0, 255),   # UAI
-            3: (0, 255, 0),     # Person
+            0: (0, 0, 255),
+            1: (0, 255, 255),
+            2: (255, 0, 255),
+            3: (0, 255, 0),
         }
 
         for det in result["detections"]:
@@ -232,10 +233,6 @@ class MCDropoutPipeline:
                 2,
             )
 
-        # ------------------------------
-        # Decision banner
-        # ------------------------------
-
         banner_colors = {
             "SAFE": (0, 200, 0),
             "CAUTION": (0, 165, 255),
@@ -257,10 +254,6 @@ class MCDropoutPipeline:
             4,
         )
 
-        # ------------------------------
-        # Save
-        # ------------------------------
-
         out_dir = Path("results/visualizations")
         out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -271,7 +264,6 @@ class MCDropoutPipeline:
         print(f"🖼️  Visualization saved → {out_path}")
 
 
-
 # ---------------------------------------------------------
 # DEMO
 # ---------------------------------------------------------
@@ -280,19 +272,19 @@ if __name__ == "__main__":
 
     pipeline = MCDropoutPipeline()
 
-    test_image = r"data\valid\valid\images\frame_000016.jpg"
+    test_image = r"data\valid\valid\images\frame_000880.jpg"
 
     result = pipeline.process(test_image)
+
     pipeline.save_visualization(result)
 
-    # Save JSON output
     Path("results/metrics").mkdir(parents=True, exist_ok=True)
 
     json_path = "results/metrics/mc_dropout_demo.json"
+
     safe_result = make_json_safe(result)
 
     with open(json_path, "w") as f:
         json.dump(safe_result, f, indent=2)
 
     print("\n📄 Saved demo JSON →", json_path)
-

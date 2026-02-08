@@ -1,0 +1,123 @@
+{
+  "image": "data\\valid\\valid\\images\\frame_000880.jpg",
+  "mode": "ensemble_mc",
+  "uncertainty": {
+    "consensus": 0.03333333333333333,
+    "bbox_uncertainty": 0.0,
+    "num_models": 3
+  },
+  "detections": [
+    {
+      "class_id": 0,
+      "raw_confidence": 0.9302970170974731,
+      "calibrated_confidence": 0.943491082714578,
+      "bbox": [
+        854.8950805664062,
+        145.3685760498047,
+        982.742431640625,
+        218.93101501464844
+      ]
+    },
+    {
+      "class_id": 0,
+      "raw_confidence": 0.9295699000358582,
+      "calibrated_confidence": 0.9428973453671299,
+      "bbox": [
+        570.252197265625,
+        215.84609985351562,
+        755.7728271484375,
+        327.7203369140625
+      ]
+    },
+    {
+      "class_id": 0,
+      "raw_confidence": 0.9161711931228638,
+      "calibrated_confidence": 0.9319401553701389,
+      "bbox": [
+        289.0679931640625,
+        419.6063232421875,
+        432.55584716796875,
+        508.28302001953125
+      ]
+    },
+    {
+      "class_id": 0,
+      "raw_confidence": 0.9127605557441711,
+      "calibrated_confidence": 0.9291460326160643,
+      "bbox": [
+        0.0,
+        295.15130615234375,
+        116.9474105834961,
+        379.7649841308594
+      ]
+    },
+    {
+      "class_id": 0,
+      "raw_confidence": 0.8889346718788147,
+      "calibrated_confidence": 0.9095696720225726,
+      "bbox": [
+        1211.3876953125,
+        24.467731475830078,
+        1312.0579833984375,
+        94.23235321044922
+      ]
+    },
+    {
+      "class_id": 0,
+      "raw_confidence": 0.8629891276359558,
+      "calibrated_confidence": 0.8881349502723451,
+      "bbox": [
+        1315.0565185546875,
+        0.5279560089111328,
+        1422.5606689453125,
+        51.19950866699219
+      ]
+    },
+    {
+      "class_id": 0,
+      "raw_confidence": 0.7914465665817261,
+      "calibrated_confidence": 0.8283634629438068,
+      "bbox": [
+        0.111785888671875,
+        495.14794921875,
+        32.55078887939453,
+        585.3001098632812
+      ]
+    },
+    {
+      "class_id": 3,
+      "raw_confidence": 0.5483391880989075,
+      "calibrated_confidence": 0.6164714380870788,
+      "bbox": [
+        629.1549682617188,
+        405.8774719238281,
+        651.7095336914062,
+        439.841796875
+      ]
+    },
+    {
+      "class_id": 0,
+      "raw_confidence": 0.43080243468284607,
+      "calibrated_confidence": 0.5076489328903538,
+      "bbox": [
+        969.2828979492188,
+        0.0,
+        1005.1730346679688,
+        20.462745666503906
+      ]
+    }
+  ],
+  "safety": {
+    "safety_score": 0.0,
+    "decision": "ABORT",
+    "reason": "No landing pad detected",
+    "risk_factors": [
+      "no_pad_detected"
+    ],
+    "pad_detection": null,
+    "uncertainty": null,
+    "consensus": null
+  },
+  "decision": "ABORT",
+  "score": 0.0
+}

@@ -2,22 +2,27 @@
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
 
-# Virtual env
+# Virtual environments
 .venv/
+venv/
 
-# IDE
+# IDEs
 .idea/
 .vscode/
 
-# Large data
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data & outputs
 data/
-models/yolo/
 results/
+models/
 
 # Notebooks checkpoints
 .ipynb_checkpoints/
 
-# OS junk
-Thumbs.db
-.DS_Store
+# Logs
+*.log

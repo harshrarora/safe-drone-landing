@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual env
+.venv/
+
+# IDE
+.idea/
+.vscode/
+
+# Large data
+data/
+models/yolo/
+results/
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# OS junk
+Thumbs.db
+.DS_Store

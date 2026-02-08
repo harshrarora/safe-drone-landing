@@ -1,0 +1,60 @@
+{
+  "image_path": "data\\valid\\valid\\images\\frame_000016.jpg",
+  "mode": "mc_dropout",
+  "uncertainty": {
+    "method": "mc_dropout",
+    "consensus": 0.7666666666666667,
+    "bbox_uncertainty": 0.1700501134797331
+  },
+  "detections": [
+    {
+      "class_id": 1,
+      "raw_confidence": 0.9551132917404175,
+      "calibrated_confidence": 0.9637014799211604,
+      "bbox": [
+        824.802978515625,
+        411.7016906738281,
+        1016.3543701171875,
+        579.821044921875
+      ]
+    },
+    {
+      "class_id": 3,
+      "raw_confidence": 0.8584141731262207,
+      "calibrated_confidence": 0.8843424468210176,
+      "bbox": [
+        1805.662841796875,
+        274.3041687011719,
+        1845.8409423828125,
+        328.5586853027344
+      ]
+    }
+  ],
+  "safety_assessment": {
+    "safety_score": 0.8673,
+    "decision": "SAFE",
+    "risk_factors": [
+      {
+        "type": "complex_terrain",
+        "penalty": 0.1,
+        "severity": "low"
+      }
+    ],
+    "explanation": "SAFE: primary risks = complex_terrain",
+    "uncertainty": 0.1700501134797331,
+    "consensus": 0.7666666666666667,
+    "pad_detection": {
+      "class_id": 1,
+      "raw_confidence": 0.9551132917404175,
+      "calibrated_confidence": 0.9637014799211604,
+      "bbox": [
+        824.802978515625,
+        411.7016906738281,
+        1016.3543701171875,
+        579.821044921875
+      ]
+    }
+  },
+  "final_decision": "SAFE",
+  "final_score": 0.8673
+}

@@ -18,7 +18,6 @@ Thumbs.db
 
 # Data & outputs
 data/
-results/
 models/
 
 # Notebooks checkpoints
